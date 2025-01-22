@@ -1,0 +1,689 @@
+:root {
+  --primary: #8b0000;
+  --secondary: #ff4444;
+  --dr-pepper: #5c0000;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.container {
+  max-width: 1200px;
+  padding: 2rem;
+}
+
+h1 {
+  text-align: center;
+  color: var(--secondary);
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px rgba(255,68,68,0.3);
+}
+
+.factory {
+  display: flex;
+  gap: 2rem;
+  background: linear-gradient(145deg, #333, #222);
+  border: 1px solid #444;
+  box-shadow: 10px 10px 20px rgba(0,0,0,0.4),
+              -5px -5px 15px rgba(255,255,255,0.05);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.machine-container {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  background: linear-gradient(165deg, #1a1a1a, #2a2a2a);
+  border: 2px solid #444;
+  box-shadow: 
+    inset 0 0 50px rgba(0,0,0,0.5),
+    0 0 20px rgba(139,0,0,0.2);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.tanks {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.tank {
+  width: 100px;
+  height: 150px;
+  background: linear-gradient(135deg, #3a3a3a, #222);
+  border: 2px solid #555;
+  border-radius: 10px;
+  box-shadow: 
+    inset 0 0 20px rgba(0,0,0,0.5),
+    0 5px 15px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.tank::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  height: 15px;
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0.1),
+    rgba(255,255,255,0.2) 50%,
+    rgba(255,255,255,0.1)
+  );
+  border-radius: 5px;
+}
+
+.liquid-level {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80%;
+  box-shadow: 
+    inset 0 0 30px rgba(0,0,0,0.3),
+    0 0 10px rgba(255,255,255,0.1);
+  background: linear-gradient(135deg, 
+    var(--dr-pepper) 0%,
+    #7b0000 50%,
+    var(--dr-pepper) 100%
+  );
+  transition: height 0.5s;
+  animation: liquidPulse 2s infinite ease-in-out;
+}
+
+.tank[data-ingredient="carbonation"] .liquid-level {
+  background: #a8c9ff;
+  opacity: 0.7;
+}
+
+.tank[data-ingredient="flavoring"] .liquid-level {
+  background: #ffaa00;
+}
+
+.label {
+  position: absolute;
+  bottom: -25px;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.machinery {
+  width: 100%;
+  height: 400px;
+  filter: drop-shadow(0 0 10px rgba(255,68,68,0.1));
+}
+
+.mixing-chamber {
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.4));
+}
+
+.mixer-blades {
+  animation: spin 1s linear infinite;
+  transform-origin: 150px 225px;
+}
+
+.bottles-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+}
+
+.bottle {
+  position: absolute;
+  bottom: 20px;
+  width: 30px;
+  height: 80px;
+  background: linear-gradient(135deg, 
+    rgba(255,255,255,0.3),
+    rgba(255,255,255,0.1)
+  );
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 
+    0 5px 15px rgba(0,0,0,0.2),
+    inset 0 0 20px rgba(255,255,255,0.1);
+  border-radius: 5px 5px 0 0;
+  transition: transform 0.5s linear;
+  overflow: hidden;
+}
+
+.bottle.empty {
+  background: rgba(255,255,255,0.2);
+}
+
+.bottle.filled::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(135deg,
+    var(--dr-pepper) 0%,
+    #7b0000 50%,
+    var(--dr-pepper) 100%
+  );
+  box-shadow: 
+    inset 0 0 30px rgba(0,0,0,0.3),
+    0 0 10px rgba(139,0,0,0.3);
+  animation: fillBottle 1.5s ease-out;
+}
+
+.bottle.labeled::after {
+  content: 'Dr\APepper';
+  white-space: pre;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  font-size: 6px;
+  color: white;
+  text-align: center;
+  line-height: 1.2;
+  opacity: 0;
+  animation: fadeLabel 0.5s forwards;
+}
+
+.robot-arm {
+  position: absolute;
+  top: 150px;
+  left: 150px;
+  width: 40px;
+  height: 120px;
+  background: linear-gradient(90deg, #666, #888);
+  border: 2px solid #999;
+  box-shadow: 
+    2px 2px 10px rgba(0,0,0,0.4),
+    inset 0 0 20px rgba(0,0,0,0.3);
+  border-radius: 5px;
+  transform-origin: top center;
+  z-index: 10;
+}
+
+.robot-arm::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: linear-gradient(90deg, #777, #999);
+  border-bottom: 2px solid #555;
+}
+
+.robot-arm::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  background: #555;
+  border-radius: 50%;
+  box-shadow: 
+    inset 0 0 10px rgba(0,0,0,0.5),
+    0 2px 5px rgba(0,0,0,0.3);
+}
+
+.labeling-machine {
+  position: absolute;
+  top: 200px;
+  left: 300px;
+  width: 60px;
+  height: 100px;
+  background: linear-gradient(145deg, #888, #666);
+  border: 1px solid #999;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  border-radius: 5px;
+}
+
+.labeling-machine.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 40px;
+  background: #555;
+  animation: labelStamp 1s;
+}
+
+.controls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #444;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--secondary);
+  cursor: pointer;
+}
+
+.control-btn {
+  padding: 1rem;
+  font-size: 1.1rem;
+  background: linear-gradient(145deg, 
+    var(--primary) 0%,
+    #6b0000 100%
+  );
+  border: 2px solid rgba(255,255,255,0.1);
+  box-shadow: 
+    5px 5px 15px rgba(0,0,0,0.3),
+    -2px -2px 10px rgba(255,255,255,0.05);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.control-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(255,255,255,0.1) 50%,
+    transparent 100%
+  );
+  transform: rotate(45deg);
+  animation: buttonShine 3s infinite;
+}
+
+.control-btn:hover:not(:disabled) {
+  background: linear-gradient(145deg, var(--secondary), var(--primary));
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.control-btn:active {
+  transform: scale(0.98);
+}
+
+.stats {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #333;
+  border-radius: 0.5rem;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes flow {
+  0% { stroke-dashoffset: 100; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.pipe {
+  stroke-dasharray: 20;
+  animation: flow 1s linear infinite;
+  animation-play-state: paused;
+}
+
+.pipe.active {
+  stroke: #888;
+  filter: 
+    drop-shadow(0 0 5px rgba(255,255,255,0.2))
+    drop-shadow(0 0 10px rgba(139,0,0,0.3));
+  animation-play-state: running;
+}
+
+.audio-indicator {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.audio-indicator.visible {
+  opacity: 1;
+}
+
+.particle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #666, #444);
+  box-shadow: 
+    0 0 20px rgba(255,68,68,0.4),
+    inset 0 0 10px rgba(255,255,255,0.1);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.particle[data-type="tank"] {
+  width: 30px;
+  height: 40px;
+  background: #444;
+  border-radius: 4px;
+}
+
+.particle[data-type="bottle"] {
+  width: 15px;
+  height: 35px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px 2px 0 0;
+}
+
+.particle[data-type="gear"] {
+  width: 25px;
+  height: 25px;
+  background: #888;
+  clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
+}
+
+.particle[data-type="metal"] {
+  width: 15px;
+  height: 15px;
+  background: #999;
+  clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 15% 100%);
+}
+
+.smoke {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, 
+    rgba(0,0,0,0.9) 0%, 
+    rgba(139,0,0,0.8) 30%,
+    rgba(0,0,0,0) 70%);
+  animation: dissipate 2s forwards;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  filter: blur(10px);
+}
+
+@keyframes dissipate {
+  0% {
+    opacity: 1;
+    transform: scale(0.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+.control-btn.danger {
+  background: #ff4444;
+  margin-top: 1rem;
+}
+
+.control-btn.danger:hover:not(:disabled) {
+  background: #ff6666;
+}
+
+.finished-products {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: linear-gradient(145deg, #333, #222);
+  border: 1px solid #444;
+  box-shadow: 10px 10px 20px rgba(0,0,0,0.4),
+              -5px -5px 15px rgba(255,255,255,0.05);
+  padding: 1rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.finished-products h2 {
+  color: var(--secondary);
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.product-card {
+  background: linear-gradient(145deg, #2a2a2a, #222);
+  border: 2px solid #444;
+  box-shadow: 
+    10px 10px 20px rgba(0,0,0,0.4),
+    -5px -5px 15px rgba(255,255,255,0.05);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: slideIn 0.3s ease-out;
+}
+
+.product-card:hover {
+  transform: perspective(1000px) rotateX(5deg) translateY(-5px);
+}
+
+.product-can {
+  width: 60px;
+  height: 100px;
+  background: linear-gradient(135deg,
+    var(--dr-pepper) 0%,
+    #7b0000 50%,
+    var(--dr-pepper) 100%
+  );
+  box-shadow: 
+    inset 0 0 30px rgba(0,0,0,0.3),
+    0 10px 20px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.product-can::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 45%, transparent 50%);
+  animation: shine 2s infinite;
+}
+
+.product-can::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.1),
+    rgba(255,255,255,0.2) 50%,
+    rgba(255,255,255,0.1)
+  );
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.product-details {
+  flex: 1;
+}
+
+.drink-btn {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(145deg, var(--primary), #6b0000);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.drink-btn:hover {
+  background: linear-gradient(145deg, var(--secondary), var(--primary));
+  box-shadow: 2px 2px 8px rgba(255,68,68,0.3);
+}
+
+.drink-animation {
+  animation: drink 1s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) translateY(-100%); }
+  50%, 100% { transform: translateX(100%) translateY(100%); }
+}
+
+@keyframes drink {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(45deg);
+  }
+  100% {
+    transform: translateY(50px) rotate(90deg);
+    opacity: 0;
+  }
+}
+
+.product-info {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin: 0.5rem 0;
+}
+
+.bubbles-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  animation: float 2s infinite ease-out;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes moveArm {
+  0% { transform: translateY(-100%) rotate(0deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes moveArmBack {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-100%) rotate(0deg); }
+}
+
+@keyframes fillBottle {
+  0% { height: 0; }
+  100% { height: 80%; }
+}
+
+@keyframes fadeLabel {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes labelStamp {
+  0% { transform: translateX(-50%) translateY(-20px); }
+  50% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-20px); }
+}
+
+@keyframes liquidPulse {
+  0%, 100% { height: 80%; }
+  50% { height: 78%; }
+}
+
+@keyframes buttonShine {
+  from { transform: rotate(45deg) translateY(-100%); }
+  to { transform: rotate(45deg) translateY(100%); }
+}

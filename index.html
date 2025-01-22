@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Pepper Manufacturing Plant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="audio-indicator">Click anywhere to enable sound</div>
+  <div class="finished-products">
+    <h2>Finished Products</h2>
+  </div>
+  <div class="container">
+    <h1>Dr. Pepper Production Line</h1>
+    <div class="factory">
+      <div class="machine-container">
+        <!-- Ingredient tanks -->
+        <div class="tanks">
+          <div class="tank" data-ingredient="syrup">
+            <div class="liquid-level"></div>
+            <div class="label">Syrup</div>
+          </div>
+          <div class="tank" data-ingredient="carbonation">
+            <div class="liquid-level"></div>
+            <div class="label">CO₂</div>
+          </div>
+          <div class="tank" data-ingredient="flavoring">
+            <div class="liquid-level"></div>
+            <div class="label">23 Flavors</div>
+          </div>
+        </div>
+        
+        <!-- Mixing and bottling machinery -->
+        <svg class="machinery" viewBox="0 0 400 500">
+          <!-- Pipes -->
+          <path class="pipe syrup-pipe" d="M50,100 L50,200 L150,200" fill="none" stroke="#666" stroke-width="8"/>
+          <path class="pipe carbonation-pipe" d="M150,100 L150,180 L150,200" fill="none" stroke="#666" stroke-width="8"/>
+          <path class="pipe flavor-pipe" d="M250,100 L250,200 L150,200" fill="none" stroke="#666" stroke-width="8"/>
+          
+          <!-- Mixing chamber -->
+          <g class="mixing-chamber">
+            <path d="M120,200 L180,200 L190,250 L110,250 Z" fill="#999"/>
+            <g class="mixer-blades"></g>
+          </g>
+          
+          <!-- Filling station -->
+          <g class="filling-station">
+            <rect x="130" y="270" width="40" height="80" fill="#666"/>
+            <path class="nozzle" d="M145,350 L155,350 L155,370 L145,370 Z" fill="#444"/>
+            <path class="robot-arm-mount" d="M140,150 L160,150 L165,170 L135,170 Z" fill="#888"/>
+          </g>
+          
+          <!-- Labeling station -->
+          <g class="labeling-station">
+            <rect x="280" y="200" width="60" height="100" fill="#777"/>
+            <rect x="290" y="280" width="40" height="20" fill="#666"/>
+          </g>
+          
+          <!-- Conveyor belt -->
+          <g class="conveyor">
+            <rect x="50" y="400" width="300" height="20" fill="#444"/>
+            <g class="belt-marks"></g>
+          </g>
+        </svg>
+        
+        <!-- Robot arm -->
+        <div class="robot-arm"></div>
+        
+        <!-- Labeling machine -->
+        <div class="labeling-machine"></div>
+        
+        <!-- Bottles container -->
+        <div class="bottles-container"></div>
+      </div>
+      
+      <div class="controls">
+        <div class="sliders">
+          <div class="slider-group">
+            <label>Production Speed</label>
+            <input type="range" min="0" max="100" value="50" class="slider" id="speed">
+          </div>
+          <div class="slider-group">
+          </div>
+        </div>
+        <div class="buttons">
+          <button id="start" class="control-btn">Start Production</button>
+          <button id="stop" class="control-btn" disabled>Stop Production</button>
+          <button id="explode" class="control-btn danger">☢️ Self Destruct ☢️</button>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <label>Bottles Produced:</label>
+            <span id="bottle-count">0</span>
+          </div>
+          <div class="stat">
+            <label>Production Status:</label>
+            <span id="status">Idle</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="factory.js"></script>
+</body>
+</html>
